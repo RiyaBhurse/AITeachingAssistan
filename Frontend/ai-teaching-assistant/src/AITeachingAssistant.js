@@ -26,7 +26,7 @@ const AITeachingAssistant = () => {
     setInput('');
 
     try {
-      const response = await fetch('http://localhost:3011/chat', {
+      const response = await fetch('http://localhost:3012/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,15 +49,38 @@ const AITeachingAssistant = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen max-w-2xl mx-auto p-4">
-      <Card className="flex-grow overflow-hidden flex flex-col">
-        <CardHeader>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '90vh', width: '90vw', margin: '0 auto', padding: '20px', border: '3px solid black' }}>
+      <Card style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto', overflow: 'hidden' }}>
+        <CardHeader style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: 'grey', borderBottom: '1px solid #ddd', color: 'black', display: 'flex', justifyContent: 'center' }}>
           <CardTitle>AI Teaching Assistant</CardTitle>
         </CardHeader>
-        <CardContent className="flex-grow overflow-y-auto">
+
+        <CardContent style={{ flex: '1 1 auto', overflowY: 'auto', padding: '10px', wordBreak: 'break-word', fontSize: '14px' }}>
           {messages.map((message, index) => (
-            <div key={index} className={`mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
-              <div className={`inline-block p-2 rounded-lg ${message.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
+            <div 
+              key={index} 
+              style={{ 
+                marginBottom: '1rem', 
+                textAlign: message.role === 'user' ? 'right' : 'left',
+                display: 'flex',
+                justifyContent: message.role === 'user' ? 'flex-end' : 'flex-start',
+                width: '100%'
+              }}
+            >
+              <div
+                style={{ 
+                  display: 'inline-block', 
+                  padding: '10px', 
+                  borderRadius: '5px', 
+                  backgroundColor: message.role === 'user' ? '#bfdbfe' : '#f3f4f6', 
+                  color: 'black', 
+                  maxWidth: '75%', 
+                  wordBreak: 'break-word', 
+                  whiteSpace: 'pre-wrap', 
+                  overflowWrap: 'break-word',
+                  fontSize: '14px', // Reduced font size for better fit
+                }}
+              >
                 <ReactMarkdown>{message.content}</ReactMarkdown>
               </div>
             </div>
@@ -65,17 +88,18 @@ const AITeachingAssistant = () => {
           <div ref={messagesEndRef} />
         </CardContent>
       </Card>
-      <form onSubmit={handleSubmit} className="mt-4 flex">
-        <Input
+
+      <form onSubmit={handleSubmit} style={{ display: 'flex', padding: '10px', borderTop: '1px solid #ddd', backgroundColor: 'white', marginTop: 'auto' }}>
+        <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your message here..."
-          className="flex-grow mr-2"
+          style={{ flexGrow: 1, marginRight: '10px', padding: '10px', borderRadius: '5px', border: '1px solid #ccc', fontSize: '14px' }}
         />
-        <Button type="submit" disabled={isLoading}>
+        <button type="submit" disabled={isLoading} style={{ padding: '10px', borderRadius: '5px', backgroundColor: '#007bff', color: 'white', border: 'none', fontSize: '14px' }}>
           {isLoading ? 'Sending...' : <Send size={20} />}
-        </Button>
+        </button>
       </form>
     </div>
   );
