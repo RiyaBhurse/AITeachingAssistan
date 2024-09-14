@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Send from './Send';
-import { Button } from './Button';
-import { Input } from './Input';
 import { Card, CardHeader, CardTitle, CardContent } from './Card';
 import ReactMarkdown from 'react-markdown';
 
@@ -26,7 +24,7 @@ const AITeachingAssistant = () => {
     setInput('');
 
     try {
-      const response = await fetch('http://localhost:3012/chat', {
+      const response = await fetch('http://localhost:3013/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

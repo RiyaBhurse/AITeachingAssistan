@@ -5,11 +5,12 @@ $ pip install google-generativeai
 """
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import os
 import google.generativeai as genai
-
-genai.configure(api_key="AIzaSyB1Kubblo3j3xlRlSEIA7-I4hPUNinFXWA")
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
+api_key = os.getenv("GOOGLE_AI_API_KEY")
+genai.configure(api_key=api_key)
 # Create the model
 generation_config = {
   "temperature": 1,
@@ -102,4 +103,4 @@ def chat():
         return jsonify({"error": f"An error occurred while processing your request: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=3011)
+    app.run(debug=True, port=3013)
